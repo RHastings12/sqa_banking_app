@@ -1,1 +1,1 @@
-# sqa_banking_app
+# SQA Banking App
