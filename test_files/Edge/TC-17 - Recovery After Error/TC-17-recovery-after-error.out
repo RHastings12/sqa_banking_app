@@ -1,0 +1,15 @@
+Welcome to the Banking System
+Enter account number:
+Enter PIN:
+Login successful
+Main Menu:
+Enter withdrawal amount:
+Error: Insufficient funds
+Main Menu:
+Enter deposit amount:
+Deposit successful
+Main Menu:
+Current balance: $1200
+Main Menu:
+Logout successful
+Goodbye
