@@ -1,6 +1,14 @@
 # SQA Banking App
 # 🏦 Banking System Front-End Test Suite
 
+## Assumptions
+- Text-based interface
+- Input via standard input
+- Known test account:
+  - Account: 123456
+  - PIN: 4321
+  - Balance: $1000
+
 ## 📋 Test Case Table
 
 | Test ID/Valid/Invalid/Edge | Test Name | What the Test Is Intended to Verify |
