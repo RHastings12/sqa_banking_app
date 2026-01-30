@@ -35,7 +35,7 @@
 | **TC-20**/I | Login While Logged In | Prevents duplicate login state |
 
 ## 👥 Contributors
-- Ryan Hastings
+- Ryan Hastings (100894215)
 - Myron Lobo (100874243)
 - Abdul Ghafour Ahmed (100929766)
 - Anthony Ciceu (100787198)
