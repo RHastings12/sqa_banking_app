@@ -1,7 +1,7 @@
 # SQA Banking App
 # 🏦 Banking System Front-End Test Suite
 
-## 📋 Complete Test Case Table
+## 📋 Test Case Table
 
 | Test ID/Valid/Invalid/Edge | Test Name | What the Test Is Intended to Verify |
 |---------|-----------|--------------------------------------|
