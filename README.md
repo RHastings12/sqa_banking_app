@@ -22,5 +22,6 @@
 | **TC-15**/I | Invalid Command Format | Verifies malformed commands don't crash system |
 | **TC-16**/I | Operation Without Login | Verifies operations require authentication |
 | **TC-17**/E | Recovery After Error | Verifies system continues after invalid input |
-| **TC-18**/V | Exit After Error | Verifies clean exit even after errors |
+| **TC-18**/E | Exit After Error | Verifies clean exit even after errors |
 | **TC-19**/V | End Session Properly | Verifies proper session termination |
+| **TC-20**/V | Login While Logged In | Prevents duplicate login state |
