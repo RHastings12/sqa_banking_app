@@ -36,6 +36,6 @@
 
 ## 👥 Contributors
 - Ryan Hastings
-- Myron Lobo
+- Myron Lobo (100874243)
 - Abdul Ghafour Ahmed (100929766)
 - Anthony Ciceu
