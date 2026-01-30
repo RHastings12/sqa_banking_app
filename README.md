@@ -33,3 +33,9 @@
 | **TC-18**/E | Exit After Error | Verifies clean exit even after errors |
 | **TC-19**/V | End Session Properly | Verifies proper session termination |
 | **TC-20**/I | Login While Logged In | Prevents duplicate login state |
+
+Contributors:
+Ryan Hastings
+Myron Lobo
+Abdul Ghafour Ahmed 100929766
+Anthony Ciceu
