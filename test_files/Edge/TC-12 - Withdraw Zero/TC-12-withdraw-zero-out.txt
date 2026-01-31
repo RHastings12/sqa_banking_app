@@ -1,3 +1,6 @@
+Welcome to the Banking System
+Enter account number:
+Enter PIN:
 Login successful
 Main Menu:
 Enter withdrawal amount:
