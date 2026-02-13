@@ -1,3 +1,4 @@
+```
 +-------------------+<>-----*+-------------------+
 |    BankingApp     |        |      Account      |
 +-------------------+        +-------------------+
@@ -21,108 +22,86 @@
                                | + __init__()      |
                                | + format()        |
                                +-------------------+
+```
+## Class Descriptions
 
-----------------------------------------------------------------------------------------------------------------------
-+-------------------+
-|    BankingApp     |
-+-------------------+ 
-Core program;
+### BankingApp
 
-Controls:
-Program startup
-Reading the accounts file
-Writing transactions
-Handling login session
-Showing menus
-Performing banking operations
-Running the main loop
+**Core program; controls program startup, reading accounts file, writing transactions, handling login sessions, showing menus, performing banking operations, and running the main loop.**
 
+#### Attributes
 
+| Attribute      | Meaning                                                  |
+| -------------- | -------------------------------------------------------- |
+| `accounts_file`| Name of input accounts file (e.g., `"accounts.txt"`)     |
+| `trans_file`   | Name of output transaction file (e.g., `"daily_transactions.txt"`) |
+| `accounts`     | A list or dictionary containing `Account` objects        |
+| `current_user` | The `Account` object of the currently logged‑in user     |
+| `transactions` | A list of `Transaction` objects created this session     |
 
+#### Methods
 
-Attributes
-Attribute	Meaning
+| Method            | Purpose                                                      |
+| ----------------- | ------------------------------------------------------------ |
+| `__init__()`      | Set filenames, load accounts, initialize variables           |
+| `load_accounts()` | Read the accounts file and create `Account` objects          |
+| `write_trans()`   | Write a `Transaction` object to the output file              |
+| `login()`         | Ask user for account number & PIN, authenticate              |
+| `logout()`        | Clear the active session                                     |
+| `view_balance()`  | Print the current user’s balance                             |
+| `deposit()`       | Add money to the user’s account and record the transaction   |
+| `withdraw()`      | Subtract money (if sufficient funds) and record the transaction |
+| `process_menu()`  | Read a command (deposit, withdraw, logout, exit, etc.)       |
+| `run()`           | Main loop that starts the front‑end and keeps it running     |
 
-accounts_file	Name of input accounts file (e.g., "accounts.txt")
-trans_file	Name of output transaction file (e.g., "daily_transactions.txt")
-accounts	A list or dictionary containing Account objects
-current_user	The Account object of the currently logged-in user
-transactions	A list of Transaction objects created this session
+**Relationship:**  
+`BankingApp` <>-----* `Account` (aggregation): BankingApp contains many Account objects.
 
+---
 
-Methods
-Method		Purpose
+### Account
 
-__init__()	Set filenames, load accounts, initialize variables
-load_accounts()	Read the accounts file and create Account objects
-write_trans()	Write a Transaction object to the output file
-login()		Ask user for account number & PIN, authenticate
-logout()	Clear the active session
-view_balance()	Print the current user’s balance
-deposit()	Add money to the user’s account and record the transaction
-withdraw()	Subtract money (if sufficient funds) and record the transaction
-process_menu()	Read a command (deposit, withdraw, logout, exit, etc.)
-run()		Main loop that starts the front-end and keeps it running
+**Holds everything the program knows about a user: account number, PIN, balance.**
 
-Relationship:
-BankingApp <>-----* Account
-aggregation : BankingApp contains many Account objects. This also means that objects are stored inside the system
+#### Attributes
 
-------------------------------------------------------------------------------------------------------------------
-+-------------------+
-|      Account      |
-+-------------------+
+| Attribute        | Meaning                                    |
+| ---------------- | ------------------------------------------ |
+| `account_number` | Unique ID for the account (e.g., `"123456"`) |
+| `pin`            | PIN associated with account                 |
+| `balance`        | Current balance                             |
 
-An Account holds everything the program knows about a user:
-Account number
-PIN
-Balance
+#### Methods
 
-Attributes
-Attribute	Meaning
-account_number	Unique ID for the account (e.g., "123456")
-pin		PIN associated with account
-balance		Current balance
+| Method             | Purpose                                          |
+| ------------------ | ------------------------------------------------ |
+| `__init__()`       | Creates the Account object                       |
+| `validate_pin()`   | Confirms PIN matches user input                  |
+| `get_balance()`    | Returns balance                                  |
+| `update_balance()` | Updates balance after deposit/withdraw           |
 
-Methods
-Method			Purpose
-__init__()		Creates the Account object
-validate_pin()		Confirms PIN matches user input
-get_balance()		Returns balance
-update_balance()	Updates balance after deposit/withdraw
+---
 
+### Transaction
 
+**A simple object that holds the details of a single banking transaction. Used only to store transaction data (type + account + amount) and produce a formatted line for the daily transaction file.**
 
+#### Attributes
 
+| Attribute        | Meaning                                      |
+| ---------------- | -------------------------------------------- |
+| `trans_code`     | Code for type of transaction (DEP, WDR, etc.) |
+| `account_number` | The account affected                         |
+| `amount`         | Amount deposited/withdrawn                    |
 
-------------------------------------------------------------------------------------------------------------------
-+-------------------+
-|    Transaction    |
-+-------------------+
-A simple object that holds the details of a single banking transaction.
-This class is ONLY used to:
-Store transaction data (type + account + amount)
-Produce a formatted line to write into the daily transaction file
+#### Methods
 
-Attributes
-Attribute	Meaning
-trans_code	Code for type of transaction (DEP, WDR, etc.)
-account_number	The account affected
-amount		Amount deposited/withdrawn
+| Method       | Purpose                                            |
+| ------------ | -------------------------------------------------- |
+| `__init__()` | Creates a Transaction object                       |
+| `format()`   | Converts entry to formatted text for output file   |
+
+**Relationship:**  
+`BankingApp` -----> `Transaction`: BankingApp creates new Transaction objects whenever the user makes a deposit or withdrawal. Other actions (login/logout/balance) do not produce transactions.
 
 
-Methods
-Method	Purpose
-__init__()	Creates a Transaction object
-format()	Converts entry to formatted text for output file
-
-
-
-
-Relationship:
-BankingApp -----> Transaction
-BankingApp creates new Transaction objects whenever the user makes:
-
-Deposit
-Withdraw
-Other actions (login/logout/balance) usually do not produce transactions.
