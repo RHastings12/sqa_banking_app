@@ -1,3 +1,4 @@
+```
 +-------------------+<>-----*+-------------------+
 |    BankingApp     |        |      Account      |
 +-------------------+        +-------------------+
@@ -21,7 +22,7 @@
                                | + __init__()      |
                                | + format()        |
                                +-------------------+
-
+```
 ## Class Descriptions
 
 ### BankingApp
@@ -102,3 +103,4 @@
 
 **Relationship:**  
 `BankingApp` -----> `Transaction` – BankingApp creates new Transaction objects whenever the user makes a deposit or withdrawal. Other actions (login/logout/balance) do not produce transactions.
+
