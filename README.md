@@ -9,6 +9,169 @@
   - PIN: 4321
   - Balance: $1000
 
+
+
+
+#  SQA Banking App – Phase 2
+
+## Overview
+
+The application allows a user to:
+- Log in
+- View balance
+- Deposit money
+- Withdraw money
+- Log out
+- Exit the system
+
+---
+
+## Project Structure
+
+```
+SQA-Phase2/
+│
+├── banking_app.py
+├── account.py
+├── transaction.py
+├── accounts.txt
+└── daily_transactions.txt
+```
+
+### File Descriptions
+
+| File | Purpose |
+|------|---------|
+| `banking_app.py` | Main application controller and program loop |
+| `account.py` | Account class definition |
+| `transaction.py` | Transaction class definition |
+| `accounts.txt` | Input file containing account information |
+| `daily_transactions.txt` | Output file storing recorded transactions |
+
+
+## How to Run the Program
+
+### Step 1: Navigate to the Project Folder
+
+Open a terminal and navigate to the directory containing the files:
+
+```
+cd path/to/SQA-Phase2
+```
+
+### Step 2: Run the Application
+
+```
+python banking_app.py
+```
+
+or (depending on your system):
+
+```
+python3 banking_app.py
+```
+
+---
+
+## Test Account
+
+The system includes a known test account:
+
+```
+Account Number: 123456
+PIN: 4321
+Balance: 1000.00
+```
+
+This account is stored in:
+
+```
+accounts.txt
+```
+
+---
+
+## Available Commands
+
+When running, the program will prompt:
+
+```
+Enter command (login, logout, balance, deposit, withdraw, exit):
+```
+
+### Commands
+
+| Command | Description |
+|----------|-------------|
+| `login` | Log into an account |
+| `logout` | Log out of current session |
+| `balance` | View account balance |
+| `deposit` | Deposit money |
+| `withdraw` | Withdraw money |
+| `exit` | Exit the program |
+
+---
+
+## Input File Format
+
+`accounts.txt` format:
+
+```
+account_number pin balance
+```
+
+Example:
+
+```
+123456 4321 1000.00
+```
+
+---
+
+## Output File
+
+All deposit and withdrawal transactions are written to:
+
+```
+daily_transactions.txt
+```
+
+Transaction format:
+
+```
+<TRANS_CODE> <ACCOUNT_NUMBER> <AMOUNT>
+```
+
+Example:
+
+```
+DEP 123456 200.00
+WDR 123456 50.00
+```
+
+---
+
+## Architecture
+
+The system follows the UML Design we created that is in this github as well:
+
+- `BankingApp`  
+  Controls program execution, session handling, and user commands.
+
+- `Account`  
+  Stores account number, PIN, and balance.
+
+- `Transaction`  
+  Stores transaction details and formats output for file writing.
+
+Relationships:
+- BankingApp aggregates multiple Account objects.
+- BankingApp creates Transaction objects during deposit/withdraw operations.
+
+---
+
+
+
 ## 📋 Test Case Table
 
 | Test ID/Valid/Invalid/Edge | Test Name | What the Test Is Intended to Verify |
