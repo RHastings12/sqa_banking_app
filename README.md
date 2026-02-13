@@ -12,9 +12,7 @@
 
 
 
-#  SQA Banking App – Phase 2
-
-## Overview
+##  SQA Banking App – Phase 2
 
 The application allows a user to:
 - Log in
