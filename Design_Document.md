@@ -1,27 +1,49 @@
 ```
-+-------------------+<>-----*+-------------------+
-|    BankingApp     |        |      Account      |
-+-------------------+        +-------------------+
-| - accounts_file   |        | - account_number  |
-| - trans_file      |        | - pin             |
-| - accounts        |        | - balance         |
-| - current_user    |        +-------------------+
-| - transactions    |        | + __init__()      |
-+-------------------+        | + validate_pin()  |
-| + __init__()      |        | + get_balance()   |
-| + load_accounts() |        | + update_balance()|
-| + write_trans()   |        +-------------------+
-| + login()         |
-| + logout()        |          +-------------------+
-| + view_balance()  |----------> Transaction       |
-| + deposit()       |          +-------------------+
-| + withdraw()      |          | - trans_code      |
-| + process_menu()  |          | - account_number  |
-| + run()           |          | - amount          |
-+-------------------+          +-------------------+
-                               | + __init__()      |
-                               | + format()        |
-                               +-------------------+
++--------------------------------------------------+
+|                  BankingApp                      |
++--------------------------------------------------+
+| - accounts_file: str                             |
+| - trans_file: str                                |
+| - accounts: dict[str, Account]                   |
+| - current_user: Account | None                   |
++--------------------------------------------------+
+| + __init__(accounts_file, trans_file)            |
+| + load_accounts()                                |
+| + login()                                        |
+| + logout()                                       |
+| + view_balance()                                 |
+| + deposit()                                      |
+| + withdraw()                                     |
+| + process_menu()                                 |
+| + write_trans(transaction)                       |
+| + run()                                          |
++--------------------------------------------------+
+            <>--------------------*
+            Aggregation (many)
+
++---------------------------+
+|         Account           |
++---------------------------+
+| - account_number: str     |
+| - pin: str                |
+| - balance: float          |
++---------------------------+
+| + __init__()              |
+| + validate_pin()          |
+| + get_balance()           |
+| + update_balance()        |
++---------------------------+
+
++---------------------------+
+|       Transaction         |
++---------------------------+
+| - trans_code: str         |
+| - account_number: str     |
+| - amount: float           |
++---------------------------+
+| + __init__()              |
+| + format()                |
++---------------------------+
 ```
 ## Class Descriptions
 
@@ -103,5 +125,6 @@
 
 **Relationship:**  
 `BankingApp` -----> `Transaction`: BankingApp creates new Transaction objects whenever the user makes a deposit or withdrawal. Other actions (login/logout/balance) do not produce transactions.
+
 
 
