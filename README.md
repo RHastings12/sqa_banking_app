@@ -171,6 +171,14 @@ Relationships:
 - BankingApp aggregates multiple Account objects.
 - BankingApp creates Transaction objects during deposit/withdraw operations.
 
+## Known Constraints
+
+- Only one account is pre-loaded in `accounts.txt` by default (`123456 / PIN 4321 / $1000.00`)
+- Balances are stored in memory during a session; the accounts file is **not** updated on disk
+- The `.atf` transaction file is **appended to** on each run (never overwritten)
+- On EOF (end of redirected input), the program exits cleanly
+
+
 ---
 
 
