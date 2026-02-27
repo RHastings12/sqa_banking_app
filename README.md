@@ -2,7 +2,7 @@
 # 🏦 Banking System Front-End Test Suite
 
 ## to run the app, simply go to the directory of the respective Phase and run 
-```python bankingapp.py currentaccounts.txt dailytransout.atf```
+```python bankingapp.py currentaccounts.txt transout.atf```
 
 ## Assumptions
 - Text-based interface
@@ -15,7 +15,7 @@
 
 
 
-# CSCI 3060U – Phase 3: Front End Requirements Testing
+# Phase 3: Front End Requirements Testing
 
 ## Project Overview
 
@@ -37,7 +37,7 @@ SQA Phase 3/
 ├── account.py
 ├── transaction.py
 ├── currentaccounts.txt
-├── dailytransout.atf
+├── transout.atf
 ├── Transactions/
 │   └── history_*.txt
 ├── inputs/          ← test input files (one per test case)
@@ -53,7 +53,7 @@ SQA Phase 3/
 | `account.py` | Account class representing a single bank account |
 | `transaction.py` | Transaction class for recording deposits and withdrawals |
 | `currentaccounts.txt` | Input file containing account information (format: `account_number pin balance`) |
-| `dailytransout.atf` | Output file storing recorded transactions in `.atf` format |
+| `transout.atf` | Output file storing recorded transactions in `.atf` format |
 
 ## How to Run
 
@@ -65,13 +65,13 @@ python bankingapp.py <accounts_file> <trans_file>
 
 **Examples:**
 ```bash
-python bankingapp.py currentaccounts.txt dailytransout.atf
+python bankingapp.py currentaccounts.txt transout.atf
 ```
 
 - `accounts_file` : Plain text file listing accounts (format: `account_number pin balance`)
 - `trans_file`    : Output file where daily transactions are appended in `.atf` format
 
-If no arguments are given, defaults are `currentaccounts.txt` and `dailytransout.atf`. All transactions are logged to the specified `.atf` file, and session history is also saved with timestamps in the `Transactions/` directory.
+If no arguments are given, defaults are `currentaccounts.txt` and `transout.atf`. All transactions are logged to the specified `.atf` file, and session history is also saved with timestamps in the `Transactions/` directory.
 
 ---
 ## Test Account
@@ -87,68 +87,95 @@ Balance: 1000.00
 This account is stored in:
 
 ```
-accounts.txt
+currentaccounts.txt
 ```
 
 ---
 
-## Available Commands
+## User Interface
 
-When running, the program will prompt:
+The banking application uses a **menu-driven interface** after login:
 
 ```
-Enter command (login, logout, balance, deposit, withdraw, exit):
+Welcome to the Banking System
+Enter account number:
+Enter PIN:
+Login successful
+Main Menu:
+1. View Balance
+2. Deposit
+3. Withdraw
+4. Logout
+5. Exit
 ```
 
-### Commands
+### Menu Options (After Login)
 
-| Command | Description |
-|----------|-------------|
-| `login` | Log into an account |
-| `logout` | Log out of current session |
-| `balance` | View account balance |
-| `deposit` | Deposit money |
-| `withdraw` | Withdraw money |
-| `exit` | Exit the program |
+| Option | Action | Description |
+|--------|--------|-------------|
+| **1** | View Balance | Display current account balance |
+| **2** | Deposit | Add funds to account |
+| **3** | Withdraw | Remove funds from account |
+| **4** | Logout | End current session and return to login |
+| **5** | Exit | Terminate the program |
 
 ---
 
-## Input File Format
+### Accounts File
 
-`accounts.txt` format:
+The accounts file contains a list of accounts in the format:
 
 ```
 account_number pin balance
 ```
 
-Example:
+Example (`currentaccounts.txt`):
 
 ```
 123456 4321 1000.00
 ```
 
+Each line represents one account with:
+- **account_number** — unique identifier (typically 6 digits)
+- **pin** — numeric password (typically 4 digits)
+- **balance** — initial account balance
+
 ---
 
-## Output File
+## Transaction Output Format (`.atf`)
 
-All deposit and withdrawal transactions are written to:
-
-```
-daily_transactions.txt
-```
-
-Transaction format:
-
-```
-<TRANS_CODE> <ACCOUNT_NUMBER> <AMOUNT>
-```
-
-Example:
+All transactions are logged to the specified `.atf` (ATM Transaction File) output file and can be viewed on any code/text viewing app:
 
 ```
 DEP 123456 200.00
 WDR 123456 50.00
 ```
+
+Format:
+```
+<TRANS_CODE> <ACCOUNT_NUMBER> <AMOUNT>
+```
+
+Where:
+- **TRANS_CODE** — `DEP` (deposit) or `WDR` (withdrawal)
+- **ACCOUNT_NUMBER** — The account that performed the transaction
+- **AMOUNT** — The transaction amount (formatted to 2 decimal places)
+
+### Session History Logging
+
+In addition to the `.atf` file, each session creates a timestamped history log in the `Transactions/` directory:
+
+```
+Transactions/history_YYYYMMDD_HHMMSS.txt
+```
+
+This log records all session events:
+- LOGIN events
+- LOGOUT events  
+- DEP (deposit) transactions
+- WDR (withdrawal) transactions
+
+---
 
 ---
 
