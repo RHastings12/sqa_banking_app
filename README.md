@@ -136,9 +136,9 @@ Example (`currentaccounts.txt`):
 ```
 
 Each line represents one account with:
-- **account_number** — unique identifier (typically 6 digits)
-- **pin** — numeric password (typically 4 digits)
-- **balance** — initial account balance
+- **account_number** : unique identifier (typically 6 digits)
+- **pin** : numeric password (typically 4 digits)
+- **balance** : initial account balance
 
 ---
 
@@ -157,9 +157,9 @@ Format:
 ```
 
 Where:
-- **TRANS_CODE** — `DEP` (deposit) or `WDR` (withdrawal)
-- **ACCOUNT_NUMBER** — The account that performed the transaction
-- **AMOUNT** — The transaction amount (formatted to 2 decimal places)
+- **TRANS_CODE** : `DEP` (deposit) or `WDR` (withdrawal)
+- **ACCOUNT_NUMBER** : The account that performed the transaction
+- **AMOUNT** : The transaction amount (formatted to 2 decimal places)
 
 ### Session History Logging
 
