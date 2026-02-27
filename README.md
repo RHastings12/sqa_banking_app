@@ -55,7 +55,6 @@ SQA Phase 3/
 | `currentaccounts.txt` | Input file containing account information (format: `account_number pin balance`) |
 | `dailytransout.atf` | Output file storing recorded transactions in `.atf` format |
 
-
 ## How to Run
 
 ### Command-Line Usage
@@ -66,16 +65,15 @@ python bankingapp.py <accounts_file> <trans_file>
 
 **Examples:**
 ```bash
-python bankingapp.py accounts.txt dailytransout.atf
+python bankingapp.py currentaccounts.txt dailytransout.atf
 ```
 
 - `accounts_file` — Plain text file listing accounts (format: `account_number pin balance`)
 - `trans_file`    — Output file where daily transactions are appended in `.atf` format
 
-If no arguments are given, defaults are `accounts.txt` and transaction history is going to be saved in the `Transaction` directory.
+If no arguments are given, defaults are `currentaccounts.txt` and `dailytransout.atf`. All transactions are logged to the specified `.atf` file, and session history is also saved with timestamps in the `Transactions/` directory.
 
 ---
-
 ## Test Account
 
 The system includes a known test account:
