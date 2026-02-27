@@ -177,8 +177,6 @@ This log records all session events:
 
 ---
 
----
-
 ## Architecture
 
 The system follows the UML Design we created that is in this github as well:
