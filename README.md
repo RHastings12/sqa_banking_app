@@ -15,7 +15,9 @@
 
 
 
-##  SQA Banking App – Phase 2
+# CSCI 3060U – Phase 3: Front End Requirements Testing
+
+## Project Overview
 
 The application allows a user to:
 - Log in
@@ -30,13 +32,17 @@ The application allows a user to:
 ## Project Structure
 
 ```
-SQA-Phase2/
-│
-├── banking_app.py
+SQA Phase 3/
+├── bankingapp.py
 ├── account.py
 ├── transaction.py
 ├── accounts.txt
-└── daily_transactions.txt
+├── dailytransout.atf
+├── Transactions/
+│   └── history_*.txt
+├── inputs/          ← test input files (one per test case)
+├── expected/        ← expected .atf and .out files
+└── outputs/         ← actual outputs from test runs
 ```
 
 ### File Descriptions
@@ -50,27 +56,23 @@ SQA-Phase2/
 | `daily_transactions.txt` | Output file storing recorded transactions |
 
 
-## How to Run the Program
+## How to Run
 
-### Step 1: Navigate to the Project Folder
+### Command-Line Usage
 
-Open a terminal and navigate to the directory containing the files:
-
-```
-cd path/to/SQA-Phase2
+```bash
+python bankingapp.py <accounts_file> <trans_file>
 ```
 
-### Step 2: Run the Application
+**Examples:**
+```bash
+python bankingapp.py accounts.txt dailytransout.atf
+```
 
-```
-python banking_app.py
-```
+- `accounts_file` — Plain text file listing accounts (format: `account_number pin balance`)
+- `trans_file`    — Output file where daily transactions are appended in `.atf` format
 
-or (depending on your system):
-
-```
-python3 banking_app.py
-```
+If no arguments are given, defaults are `accounts.txt` and transaction history is going to be saved in the `Transaction` directory.
 
 ---
 
