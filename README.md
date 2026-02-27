@@ -49,11 +49,11 @@ SQA Phase 3/
 
 | File | Purpose |
 |------|---------|
-| `banking_app.py` | Main application controller and program loop |
-| `account.py` | Account class definition |
-| `transaction.py` | Transaction class definition |
-| `currentaccounts.txt` | Input file containing account information |
-| `daily_transactions.txt` | Output file storing recorded transactions |
+| `bankingapp.py` | Main application controller and event loop |
+| `account.py` | Account class representing a single bank account |
+| `transaction.py` | Transaction class for recording deposits and withdrawals |
+| `currentaccounts.txt` | Input file containing account information (format: `account_number pin balance`) |
+| `dailytransout.atf` | Output file storing recorded transactions in `.atf` format |
 
 
 ## How to Run
