@@ -36,7 +36,7 @@ SQA Phase 3/
 ├── bankingapp.py
 ├── account.py
 ├── transaction.py
-├── accounts.txt
+├── currentaccounts.txt
 ├── dailytransout.atf
 ├── Transactions/
 │   └── history_*.txt
@@ -52,7 +52,7 @@ SQA Phase 3/
 | `banking_app.py` | Main application controller and program loop |
 | `account.py` | Account class definition |
 | `transaction.py` | Transaction class definition |
-| `accounts.txt` | Input file containing account information |
+| `currentaccounts.txt` | Input file containing account information |
 | `daily_transactions.txt` | Output file storing recorded transactions |
 
 
