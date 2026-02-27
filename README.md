@@ -1,7 +1,7 @@
 # SQA Banking App
 # 🏦 Banking System Front-End Test Suite
 
-## to run the app, simply go to the directory and run 
+## to run the app, simply go to the directory of the respective Phase and run 
 ```python bankingapp.py accounts.txt dailytransout.atf```
 
 ## Assumptions
