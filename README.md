@@ -68,8 +68,8 @@ python bankingapp.py <accounts_file> <trans_file>
 python bankingapp.py currentaccounts.txt dailytransout.atf
 ```
 
-- `accounts_file` — Plain text file listing accounts (format: `account_number pin balance`)
-- `trans_file`    — Output file where daily transactions are appended in `.atf` format
+- `accounts_file` : Plain text file listing accounts (format: `account_number pin balance`)
+- `trans_file`    : Output file where daily transactions are appended in `.atf` format
 
 If no arguments are given, defaults are `currentaccounts.txt` and `dailytransout.atf`. All transactions are logged to the specified `.atf` file, and session history is also saved with timestamps in the `Transactions/` directory.
 
