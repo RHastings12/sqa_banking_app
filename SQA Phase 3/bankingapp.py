@@ -5,29 +5,13 @@ Command-line usage:
     python bankingapp.py <accounts_file> <trans_file>
     python bankingapp.py accounts.txt daily_transactions.txt
     bank-atm currentaccounts.txt daily_transactions.txt
+    
+    python bankingapp.py accounts.txt dailytransout.atf
 
 stdin  → user keystrokes (or redirected test input file)
 stdout → terminal log (what the user sees on screen)
 <trans_file> → daily transaction file  (appended to, never overwritten)
                defaults to  daily_transactions.txt  if not given
-
-UML Structure  (BankingApp aggregates many Account objects)
-------------------------------------------------------------
-BankingApp
-  - accounts_file : str
-  - trans_file    : str
-  - accounts      : dict[str, Account]
-  - current_user  : Account | None
-  + __init__(accounts_file, trans_file)
-  + load_accounts()
-  + login()
-  + logout()
-  + view_balance()
-  + deposit()
-  + withdraw()
-  + process_menu()
-  + write_trans(transaction)
-  + run()
 """
 
 import sys
@@ -112,6 +96,8 @@ class BankingApp:
     - trans_file    : str
     - accounts      : dict[str, Account]   ← aggregates many Account objects
     - current_user  : Account | None
+    - history_dir   : str                   ← directory where session histories are kept
+    - history_file  : str                   ← current run's history log file
     """
 
     # ── __init__ ──────────────────────────────────────────────────────── #
@@ -120,6 +106,17 @@ class BankingApp:
         self.trans_file:    str                = trans_file
         self.accounts:      dict[str, Account] = {}
         self.current_user:  Account | None     = None
+
+        # prepare history logging
+        # history files are stored inside a "Transactions" subfolder of
+        # the application directory (phase 3 folder). we create the
+        # directory if it doesn't exist and open a fresh log for each run.
+        self.history_dir: str = os.path.join(os.path.dirname(__file__), "Transactions")
+        os.makedirs(self.history_dir, exist_ok=True)
+        timestamp = __import__("datetime").datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.history_file: str = os.path.join(self.history_dir, f"history_{timestamp}.txt")
+
+        # load the accounts after history is ready.
         self.load_accounts()
 
     # ── load_accounts ─────────────────────────────────────────────────── #
@@ -143,18 +140,34 @@ class BankingApp:
     # ── write_trans ───────────────────────────────────────────────────── #
     def write_trans(self, transaction: Transaction) -> None:
         """
-        Append one transaction record to the daily transaction file.
+        Append one transaction record to the daily transaction file *and* the
+        history log for the current run.  (History is also used for non-ATP
+        events via :meth:`log_history`.)
 
-        Format:  <CODE> <ACCOUNT_NUMBER> <AMOUNT>
-        Example:
-            DEP 123456 200.00
-            WDR 123456 100.00
-
-        Opens in append mode ('a') so every session adds to the same file
-        without erasing earlier entries (e.g. the existing DEP 123456 200.00).
+        Format (both files):  <CODE> <ACCOUNT_NUMBER> <AMOUNT>  (same as
+        Transaction.format()).
         """
+        record = transaction.format() + "\n"
+
+        # always append to the configured transaction file
         with open(self.trans_file, "a", encoding="utf-8") as f:
-            f.write(transaction.format() + "\n")
+            f.write(record)
+
+        # record in history as well
+        self.log_history(record.strip())
+
+    def log_history(self, line: str) -> None:
+        """Write an arbitrary line to the current history file.
+
+        The argument *line* should **not** contain a terminating newline; this
+        method will add one automatically.  Errors are swallowed to keep the
+        ATM running even if disk issues occur.
+        """
+        try:
+            with open(self.history_file, "a", encoding="utf-8") as f:
+                f.write(str(line) + "\n")
+        except Exception:
+            pass
 
     # ── login ─────────────────────────────────────────────────────────── #
     def login(self) -> bool:
@@ -178,12 +191,15 @@ class BankingApp:
 
         self.current_user = acc
         _ok("Login successful")
+        # record event in history as well (not a financial transaction)
+        self.log_history(f"LOGIN {account_number}")
         print()
         return True
 
     # ── logout ────────────────────────────────────────────────────────── #
     def logout(self) -> None:
         """End the current session."""
+        self.log_history(f"LOGOUT {self.current_user.account_number if self.current_user else ''}")
         self.current_user = None
         _ok("Logout successful")
         print()
@@ -302,6 +318,8 @@ class BankingApp:
         """
         abs_path = os.path.abspath(self.trans_file)
         _info(f"Transaction log: {abs_path}")
+        hist_path = os.path.abspath(self.history_file)
+        _info(f"History log:     {hist_path}")
         print()
 
         while True:
