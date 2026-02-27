@@ -20,6 +20,12 @@ import os
 from account import Account
 from transaction import Transaction
 
+# Required for encoding some characters
+if sys.platform.startswith("win"):
+    # Python 3.7+
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
 # ══════════════════════════════════════════════════════════════════════════════
 # CLI formatting helpers  
 # ══════════════════════════════════════════════════════════════════════════════
