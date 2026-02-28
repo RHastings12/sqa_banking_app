@@ -68,7 +68,6 @@ def _section(title: str) -> None:
 
 def _section_end() -> None:
     print("└" + "─" * _W + "┘")
-    #print("└" + "─" * (_W + 2) + "┘")
 
 def _ok(msg: str)   -> None: print(f"  ✔  {msg}")
 def _err(msg: str)  -> None: print(f"  ✖  {msg}")
@@ -83,17 +82,12 @@ def _bal(amount: int) -> None:
 
 
 def _prompt(label: str) -> str:
+    """Styled input prompt. Returns empty string on EOF (automated test runs)."""
     try:
-        print(f"  ▶  {label}:")
+        print(f"  ▶  {label}: ")
         return input().strip()
     except EOFError:
         return ""
-#def _prompt(label: str) -> str:
-#    """Styled input prompt. Returns empty string on EOF (automated test runs)."""
-#    try:
-#        return input(f"  ▶  {label}: ").strip()
-#    except EOFError:
-#        return ""
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -191,7 +185,6 @@ class BankingApp:
         _section("Login")
         account_number = _prompt("Account number")
         if not account_number:
-            _section_end()
             return False
 
         pin = _prompt("PIN          ")
@@ -200,7 +193,6 @@ class BankingApp:
         acc = self.accounts.get(account_number)
         if acc is None or not acc.validate_credentials(account_number, pin):
             _err("Invalid credentials")
-            print()
             return False
 
         self.current_user = acc
@@ -345,9 +337,8 @@ class BankingApp:
                 _menu_box(self.current_user.account_number)
 
                 try:
-                    print("  ▶  Select (1-5):")
+                    print("  ▶  Select (1-5): ")
                     choice = input().strip()
-                    #choice = input("  ▶  Select (1-5): ").strip()
                 except EOFError:
                     return          # clean exit when input file is exhausted
 
@@ -370,14 +361,12 @@ class BankingApp:
                     _info("Thank you for using the Banking System")
                     print()
                     print("  Goodbye")
-                    print()
                     return
 
                 elif action == "invalid_format":
                     _err("Invalid input format")
                     print()
                     print("  Goodbye")
-                    print()
                     return
 
                 else:               # invalid_option
