@@ -44,8 +44,8 @@ def _box_row(txt: str, align: str = "left") -> str:
 
 def _banner() -> None:
     print(_box_top())
-    print(_box_row("  SECURE BANKING TERMINAL", "left"))
-    print(_box_row("  ATM Interface  v3.0", "left"))
+    print(_box_row("  Banking App Terminal", "left"))
+    print(_box_row("  Phase 3", "left"))
     print(_box_div())
     print(_box_row("  Welcome to the Banking System", "left"))
     print(_box_bot())
