@@ -1,5 +1,5 @@
-  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-05-view-balance.in.atf
-  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_183614.txt
+  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-09-withdraw-valid.atf
+  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_190430.txt
 
 ╔══════════════════════════════════════════════╗
 ║  SECURE BANKING TERMINAL                     ║
@@ -23,9 +23,10 @@
 ║    4.  Logout                                ║
 ║    5.  Exit                                  ║
 ╚══════════════════════════════════════════════╝
-  ▶  Select (1-5): ┌─ Balance ────────────────────────────────────┐
-  Balance  │██████░░░░░░░░░░░░░░░░░░░░░░░░│  $1,000
-└────────────────────────────────────────────────┘
+  ▶  Select (1-5): ┌─ Withdraw ───────────────────────────────────┐
+  ▶  Amount ($)  : └────────────────────────────────────────────────┘
+  ✔  Withdrawal successful  (-$300.00)
+  Balance  │████░░░░░░░░░░░░░░░░░░░░░░░░░░│  $700
 
 ╔══════════════════════════════════════════════╗
 ║  Account: 123456                             ║

@@ -1,5 +1,5 @@
-  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-08-deposit-negative.in.atf
-  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_183614.txt
+  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-06-deposit-valid.atf
+  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_190430.txt
 
 ╔══════════════════════════════════════════════╗
 ║  SECURE BANKING TERMINAL                     ║
@@ -25,7 +25,8 @@
 ╚══════════════════════════════════════════════╝
   ▶  Select (1-5): ┌─ Deposit ────────────────────────────────────┐
   ▶  Amount ($)  : └────────────────────────────────────────────────┘
-  ✖  Invalid deposit amount
+  ✔  Deposit successful  (+$200.00)
+  Balance  │███████░░░░░░░░░░░░░░░░░░░░░░░│  $1,200
 
 ╔══════════════════════════════════════════════╗
 ║  Account: 123456                             ║

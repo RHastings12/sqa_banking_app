@@ -1,5 +1,5 @@
-  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-11-withdraw-excess.in.atf
-  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_183614.txt
+  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-17-exit-after-edge.atf
+  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_190430.txt
 
 ╔══════════════════════════════════════════════╗
 ║  SECURE BANKING TERMINAL                     ║
@@ -25,7 +25,7 @@
 ╚══════════════════════════════════════════════╝
   ▶  Select (1-5): ┌─ Withdraw ───────────────────────────────────┐
   ▶  Amount ($)  : └────────────────────────────────────────────────┘
-  ✖  Insufficient funds
+  ✖  Invalid withdrawal amount
 
 ╔══════════════════════════════════════════════╗
 ║  Account: 123456                             ║
@@ -38,4 +38,7 @@
 ║    4.  Logout                                ║
 ║    5.  Exit                                  ║
 ╚══════════════════════════════════════════════╝
-  ▶  Select (1-5): 
+  ▶  Select (1-5):   ℹ  Thank you for using the Banking System
+
+  Goodbye
+

@@ -1,5 +1,5 @@
-  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-06-deposit-valid.in.atf
-  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_183614.txt
+  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-03-logout.atf
+  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_190430.txt
 
 ╔══════════════════════════════════════════════╗
 ║  SECURE BANKING TERMINAL                     ║
@@ -23,20 +23,14 @@
 ║    4.  Logout                                ║
 ║    5.  Exit                                  ║
 ╚══════════════════════════════════════════════╝
-  ▶  Select (1-5): ┌─ Deposit ────────────────────────────────────┐
-  ▶  Amount ($)  : └────────────────────────────────────────────────┘
-  ✔  Deposit successful  (+$200.00)
-  Balance  │███████░░░░░░░░░░░░░░░░░░░░░░░│  $1,200
+  ▶  Select (1-5):   ✔  Logout successful
 
 ╔══════════════════════════════════════════════╗
-║  Account: 123456                             ║
+║  SECURE BANKING TERMINAL                     ║
+║  ATM Interface  v3.0                         ║
 ╠══════════════════════════════════════════════╣
-║  Main Menu:                                  ║
-║                                              ║
-║    1.  View Balance                          ║
-║    2.  Deposit                               ║
-║    3.  Withdraw                              ║
-║    4.  Logout                                ║
-║    5.  Exit                                  ║
+║  Welcome to the Banking System               ║
 ╚══════════════════════════════════════════════╝
-  ▶  Select (1-5): 
+
+┌─ Login ──────────────────────────────────────┐
+  ▶  Account number: └────────────────────────────────────────────────┘

@@ -1,5 +1,5 @@
-  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-04-exit-program.in.atf
-  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_183614.txt
+  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-01-valid-login.atf
+  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_190430.txt
 
 ╔══════════════════════════════════════════════╗
 ║  SECURE BANKING TERMINAL                     ║
@@ -23,7 +23,4 @@
 ║    4.  Logout                                ║
 ║    5.  Exit                                  ║
 ╚══════════════════════════════════════════════╝
-  ▶  Select (1-5):   ℹ  Thank you for using the Banking System
-
-  Goodbye
-
+  ▶  Select (1-5): 

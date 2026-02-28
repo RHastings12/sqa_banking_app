@@ -1,5 +1,5 @@
-  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-13-withdraw-negative.in.atf
-  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_183614.txt
+  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-10-withdraw-exact.atf
+  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_190430.txt
 
 ╔══════════════════════════════════════════════╗
 ║  SECURE BANKING TERMINAL                     ║
@@ -25,7 +25,8 @@
 ╚══════════════════════════════════════════════╝
   ▶  Select (1-5): ┌─ Withdraw ───────────────────────────────────┐
   ▶  Amount ($)  : └────────────────────────────────────────────────┘
-  ✖  Invalid withdrawal amount
+  ✔  Withdrawal successful  (-$1,000.00)
+  Balance  │░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░│  $0
 
 ╔══════════════════════════════════════════════╗
 ║  Account: 123456                             ║
