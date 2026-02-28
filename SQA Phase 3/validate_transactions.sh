@@ -7,6 +7,7 @@ for i in *; do
 
     output="../outputs/$i.atf"
 
+    # Only attempt to validate if the file exists
     if [ -f "$output" ]; then
         diff ../outputs/$i.atf ../expected/$i.etf
     else

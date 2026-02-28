@@ -1,4 +1,12 @@
-Welcome to the Banking System
-Enter account number:
-Enter PIN:
-Error: Invalid credentials
+╔══════════════════════════════════════════════╗
+║  Banking App Terminal                        ║
+║  Phase 3                                     ║
+╠══════════════════════════════════════════════╣
+║  Welcome to the Banking System               ║
+╚══════════════════════════════════════════════╝
+
+┌─ Login ──────────────────────────────────────┐
+  ▶  Account number:   
+  ▶  PIN          : 
+└──────────────────────────────────────────────┘
+  ✖  Invalid credentials
