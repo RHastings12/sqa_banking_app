@@ -1,9 +1,9 @@
   ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-07-deposit-zero.atf
-  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_190430.txt
+  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_193251.txt
 
 ╔══════════════════════════════════════════════╗
-║  SECURE BANKING TERMINAL                     ║
-║  ATM Interface  v3.0                         ║
+║  Banking App Terminal                        ║
+║  Phase 3                                     ║
 ╠══════════════════════════════════════════════╣
 ║  Welcome to the Banking System               ║
 ╚══════════════════════════════════════════════╝
