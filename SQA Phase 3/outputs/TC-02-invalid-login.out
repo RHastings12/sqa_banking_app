@@ -1,6 +1,3 @@
-  ℹ  Transaction log: C:\SQA\sqa_banking_app\SQA Phase 3\outputs\TC-02-invalid-login.atf
-  ℹ  History log:     C:\SQA\sqa_banking_app\SQA Phase 3\Transactions\history_20260227_193251.txt
-
 ╔══════════════════════════════════════════════╗
 ║  Banking App Terminal                        ║
 ║  Phase 3                                     ║
@@ -9,6 +6,8 @@
 ╚══════════════════════════════════════════════╝
 
 ┌─ Login ──────────────────────────────────────┐
-  ▶  Account number:   ▶  PIN          : └────────────────────────────────────────────────┘
+  ▶  Account number:
+  ▶  PIN          :
+└──────────────────────────────────────────────┘
   ✖  Invalid credentials
 

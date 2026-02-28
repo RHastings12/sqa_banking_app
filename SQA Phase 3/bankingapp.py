@@ -67,7 +67,8 @@ def _section(title: str) -> None:
     print("┌─ " + title + " " + "─" * max(0, _W - len(title) - 3) + "┐")
 
 def _section_end() -> None:
-    print("└" + "─" * (_W + 2) + "┘")
+    print("└" + "─" * _W + "┘")
+    #print("└" + "─" * (_W + 2) + "┘")
 
 def _ok(msg: str)   -> None: print(f"  ✔  {msg}")
 def _err(msg: str)  -> None: print(f"  ✖  {msg}")
@@ -80,12 +81,19 @@ def _bal(amount: int) -> None:
     bar      = "█" * filled + "░" * (bar_max - filled)
     print(f"  Balance  │{bar}│  ${amount:,}")
 
+
 def _prompt(label: str) -> str:
-    """Styled input prompt. Returns empty string on EOF (automated test runs)."""
     try:
-        return input(f"  ▶  {label}: ").strip()
+        print(f"  ▶  {label}:")
+        return input().strip()
     except EOFError:
         return ""
+#def _prompt(label: str) -> str:
+#    """Styled input prompt. Returns empty string on EOF (automated test runs)."""
+#    try:
+#        return input(f"  ▶  {label}: ").strip()
+#    except EOFError:
+#        return ""
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -322,11 +330,11 @@ class BankingApp:
         Inner while → reads menu input, calls process_menu(),
                       dispatches to the matching method.
         """
-        abs_path = os.path.abspath(self.trans_file)
-        _info(f"Transaction log: {abs_path}")
-        hist_path = os.path.abspath(self.history_file)
-        _info(f"History log:     {hist_path}")
-        print()
+        #abs_path = os.path.abspath(self.trans_file)
+        #_info(f"Transaction log: {abs_path}")
+        #hist_path = os.path.abspath(self.history_file)
+        #_info(f"History log:     {hist_path}")
+        #print()
 
         while True:
             if not self.login():
@@ -337,7 +345,9 @@ class BankingApp:
                 _menu_box(self.current_user.account_number)
 
                 try:
-                    choice = input("  ▶  Select (1-5): ").strip()
+                    print("  ▶  Select (1-5):")
+                    choice = input().strip()
+                    #choice = input("  ▶  Select (1-5): ").strip()
                 except EOFError:
                     return          # clean exit when input file is exhausted
 
