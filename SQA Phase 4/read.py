@@ -15,7 +15,7 @@ def read_old_bank_accounts(file_path):
 
             try:
                 # Extract fields with positional validation
-                account_number = clean_line[0:4]
+                account_number = clean_line[0:5]
                 name = clean_line[6:25]  # 20 characters
                 status = clean_line[27]
                 balance_str = clean_line[29:37]  # 8 characters
