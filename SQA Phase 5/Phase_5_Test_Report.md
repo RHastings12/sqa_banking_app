@@ -162,7 +162,7 @@ return accounts
 
 ## 7. Failures
 
-**2 failures were uncovered by testing.**
+**2 failures in one bug were uncovered by testing.**
 
 ---
 
