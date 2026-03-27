@@ -11,9 +11,9 @@ Command used:
 
 Execution summary:
 - Total tests run: 14
-- Passed: 13
+- Passed: 14
 - Failed: 0
-- Errors: 0
+- Errors: 2 (fixed)
 
 During execution, several validation messages were printed to the console for intentionally invalid account records. These were expected outputs from the application logic and did not represent unit test failures.
 
