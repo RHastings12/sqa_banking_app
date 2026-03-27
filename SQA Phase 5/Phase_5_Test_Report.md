@@ -27,43 +27,7 @@ During execution, several validation messages were printed to the console for in
 | transfer | 05 12345 54321 300 | both update       | transfer        |
 | paybill  | 06 12345 100       | balance decreases | paybill         |
 | end      | 00                 | returns false     | exit            |
-## 2. Method 1 – Statement Coverage: `execute_transaction()`
 
-### 2.1 Method Source (Annotated)
-
-```python
-def execute_transaction(self, transaction):         # S1
-    parts = transaction.split()                     # S2
-    code = parts[0]                                 # S3
-
-    if code == "03":                                # D1
-        self.account_manager.deposit(...)           # S4
-    elif code == "04":                              # D2
-        self.account_manager.withdraw(...)          # S5
-    elif code == "05":                              # D3
-        self.account_manager.transfer(...)          # S6
-    elif code == "06":                              # D4
-        self.account_manager.pay_bill(...)          # S7
-    elif code == "00":                              # D5
-        return False                                # S8
-
-    return True                                     # S9
-```
-
-**Statements to cover:** S1–S9  
-**Decisions to exercise:** D1–D5 (each taken True once)
-
-### 2.2 Statement Coverage – Test Case Table
-
-| Test ID | Test Name                           | Input Transaction         | Statements Covered | Expected Return | Expected Side Effect                   |
-|---------|-------------------------------------|---------------------------|--------------------|-----------------|----------------------------------------|
-| SC-01   | `test_deposit_transaction`          | `"03 12345 200.00"`       | S1–S4, S9          | `True`          | Account 12345 balance → 1200.00        |
-| SC-02   | `test_withdraw_transaction`         | `"04 12345 150.00"`       | S1–S3, S5, S9      | `True`          | Account 12345 balance → 850.00         |
-| SC-03   | `test_transfer_transaction`         | `"05 12345 54321 300.00"` | S1–S3, S6, S9      | `True`          | 12345 → 700.00; 54321 → 800.00         |
-| SC-04   | `test_paybill_transaction`          | `"06 12345 100.00"`       | S1–S3, S7, S9      | `True`          | Account 12345 balance → 900.00         |
-| SC-05   | `test_end_of_session_transaction`   | `"00"`                    | S1–S3, S8          | `False`         | No balance change                      |
-
-**All 9 statements are covered across the 5 test cases.**
 
 
 ### Decision + Loop Table
