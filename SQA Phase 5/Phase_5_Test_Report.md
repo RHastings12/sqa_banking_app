@@ -172,7 +172,7 @@ return accounts
 |------------------|--------|
 | **Bug ID**       | BUG-01 |
 | **Severity**     | Medium |
-| **Affects**      | `read_old_bank_accounts()` in `read.py` (line 70) |
+| **Affects**      | `read_old_bank_accounts()` in `read.py` (line 70) in phase 4 |
 | **Tests Failed** | DL-01 (`test_valid_single_account`), DL-08 (`test_multiple_lines_loop_coverage`) |
 
 **Description:**  
