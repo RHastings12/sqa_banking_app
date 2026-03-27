@@ -183,6 +183,15 @@ class TestReadOldBankAccountsDecisionLoopCoverage(unittest.TestCase):
         self.assertEqual(accounts[0]["account_number"], "1234")
         self.assertEqual(accounts[1]["account_number"], "2345")
 
+    def test_empty_file_zero_iteration(self):
+        lines = []
+        file_path = self.create_temp_file(lines)
+
+        accounts = read_old_bank_accounts(file_path)
+
+        os.remove(file_path)
+
+        self.assertEqual(len(accounts), 0)
 
 if __name__ == "__main__":
     unittest.main()
