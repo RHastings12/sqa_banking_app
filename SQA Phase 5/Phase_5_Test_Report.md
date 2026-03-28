@@ -60,16 +60,18 @@ def execute_transaction(self, transaction):         # S1
 
 ### Decision + Loop Table
 
-| Test                 | Case              | Expected      |
-| -------------------- | ----------------- | ------------- |
-| valid                | correct format    | account added |
-| invalid length       | wrong length      | rejected      |
-| invalid account      | letters in ID     | rejected      |
-| invalid status       | not A/D           | rejected      |
-| invalid balance      | negative          | rejected      |
-| invalid transactions | not digits        | rejected      |
-| invalid plan         | not SP/NP         | rejected      |
-| multiple lines       | mix valid/invalid | loop works    |
+| Test                   | Case               | Expected      |
+| ---------------------- | ------------------ | ------------- |
+| valid                  | correct format     | account added |
+| invalid length         | wrong length       | rejected      |
+| invalid account        | letters in ID      | rejected      |
+| invalid status         | not A/D            | rejected      |
+| invalid balance value  | negative           | rejected      |
+| invalid balance format | wrong # of digits  | rejected      |
+| invalid transactions   | not digits         | rejected      |
+| invalid plan           | not SP/NP          | rejected      |
+| two lines              | two valid accounts | loop works    |
+| multiple lines         | mix valid/invalid  | loop works    |
 
 ---
 
@@ -110,7 +112,7 @@ return accounts
 ```
 
 **Decisions:** D1–D10  
-**Loop L1:** must be tested at zero iterations, one iteration, and multiple iterations.
+**Loop L1:** must be tested at zero iterations, one iteration, two iterations, and multiple iterations.
 
 ---
 
@@ -118,17 +120,19 @@ return accounts
 
 | Test ID | Test Name                           | Loop Iterations | Decisions Exercised                              | Input Description                              | Expected # Accounts |
 |---------|-------------------------------------|-----------------|--------------------------------------------------|------------------------------------------------|---------------------|
-| DL-01   | `test_valid_single_account`         | 1               | D1=F, D2=F, D3=F, D4=F, D5=F, D6=F, D7=F       | Valid 45-char line, all fields correct         | 1                   |
+| DL-01   | `test_valid_single_account`         | 1               | D1=F, D2=F, D3=F, D4=F, D5=F, D6=F, D7=F         | Valid 45-char line, all fields correct         | 1                   |
 | DL-02   | `test_invalid_length_line`          | 1               | D1=T                                             | Line is 32 chars (not 45)                      | 0                   |
 | DL-03   | `test_invalid_account_number`       | 1               | D1=F, D2=T                                       | Account number `0A234` (contains letter)       | 0                   |
-| DL-04   | `test_invalid_status`               | 1               | D1=F, D2=F, D3=T                                 | Status field is `X` (not A or D)              | 0                   |
-| DL-05   | `test_negative_balance_format`      | 1               | D1=F, D2=F, D3=F, D4=T                           | Balance starts with `-`                        | 0                   |
-| DL-06   | `test_invalid_transaction_count`    | 1               | D1=F, D2=F, D3=F, D4=F, D5=F, D6=T              | Transaction count is `00A0` (contains letter)  | 0                   |
-| DL-07   | `test_invalid_plan_type`            | 1               | D1=F, D2=F, D3=F, D4=F, D5=F, D6=F, D7=T        | Plan type is `XX` (not SP or NP)               | 0                   |
-| DL-08   | `test_multiple_lines_loop_coverage` | 3               | L1 multiple; D2=T on line 3                      | 2 valid lines + 1 invalid account number       | 2                   |
-| DL-09   | `test_empty_file_zero_iteration`    | 0               | L1 = 0 (loop body never executes)                | Empty file                                     | 0                   |
+| DL-04   | `test_invalid_status`               | 1               | D1=F, D2=F, D3=T                                 | Status field is `X` (not A or D)               | 0                   |
+| DL-05   | `test_negative_balance`             | 1               | D1=F, D2=F, D3=F, D4=T                           | Balance starts with `-`                        | 0                   |
+| DL-06   | `test_invalid_balance_format`       | 1               | D1=F, D2=F, D3=F, D4=F, D5=T                     | Balance has 3 decimal places                   | 0                   |
+| DL-07   | `test_invalid_transaction_count`    | 1               | D1=F, D2=F, D3=F, D4=F, D5=F, D6=T               | Transaction count is `00A0` (contains letter)  | 0                   |
+| DL-08   | `test_invalid_plan_type`            | 1               | D1=F, D2=F, D3=F, D4=F, D5=F, D6=F, D7=T         | Plan type is `XX` (not SP or NP)               | 0                   |
+| DL-09   | `test_two_lines_loop_coverage`      | 2               | L1 twice; all decisions false                    | 2 valid lines                                  | 2                   |
+| DL-10   | `test_multiple_lines_loop_coverage` | 3               | L1 multiple; D2=T on line 3                      | 2 valid lines + 1 invalid account number       | 2                   |
+| DL-11   | `test_empty_file_zero_iteration`    | 0               | L1 = 0 (loop body never executes)                | Empty file                                     | 0                   |
 
-**Loop coverage:** DL-09 covers zero iterations; DL-01 through DL-07 cover one iteration; DL-08 covers multiple iterations including a mid-loop rejection.
+**Loop coverage:** DL-11 covers zero iterations; DL-01 through DL-08 cover one iteration; DL-09 covers two iterations; DL-10 covers multiple iterations including a mid-loop rejection.
 
 ---
 
@@ -146,23 +150,25 @@ return accounts
 
 ### Decision and Loop Coverage : `read_old_bank_accounts()`
 
-| Test ID | Test Method Name                          | Input Description                         | Expected # Accounts | Actual # Accounts | Result  |
+| Test ID | Test Method Name                          | Input Description                        | Expected # Accounts | Actual # Accounts | Result  |
 |---------|------------------------------------------|-------------------------------------------|---------------------|-------------------|---------|
 | DL-01   | `test_valid_single_account`              | Valid 45-char line, all fields correct    | 1                   | 1                 | ❌ FAIL |
 | DL-02   | `test_invalid_length_line`               | Line too short (32 chars, not 45)         | 0                   | 0                 | ✅ PASS |
 | DL-03   | `test_invalid_account_number`            | Account number `0A234` (non-digit)        | 0                   | 0                 | ✅ PASS |
-| DL-04   | `test_invalid_status`                    | Status `X` (not A or D)                  | 0                   | 0                 | ✅ PASS |
-| DL-05   | `test_negative_balance_format`           | Balance starts with `-`                   | 0                   | 0                 | ✅ PASS |
-| DL-06   | `test_invalid_transaction_count`         | Transaction count `00A0` (non-digit)      | 0                   | 0                 | ✅ PASS |
-| DL-07   | `test_invalid_plan_type`                 | Plan type `XX` (not SP or NP)             | 0                   | 0                 | ✅ PASS |
-| DL-08   | `test_multiple_lines_loop_coverage`      | 3 lines: 2 valid, 1 invalid account #    | 2                   | 2                 | ❌ FAIL |
-| DL-09   | `test_empty_file_zero_iteration`         | Empty file                                | 0                   | 0                 | ✅ PASS |
+| DL-04   | `test_invalid_status`                    | Status `X` (not A or D)                   | 0                   | 0                 | ✅ PASS |
+| DL-05   | `test_negative_balance`                  | Balance starts with `-`                   | 0                   | 0                 | ✅ PASS |
+| DL-06   | `test_invalid_balance_format`            | Balance has 3 decimal places              | 0                   | 0                 | ✅ PASS |
+| DL-07   | `test_invalid_transaction_count`         | Transaction count `00A0` (non-digit)      | 0                   | 0                 | ✅ PASS |
+| DL-08   | `test_invalid_plan_type`                 | Plan type `XX` (not SP or NP)             | 0                   | 0                 | ✅ PASS |
+| DL-09   | `test_two_lines_loop_coverage`           | 2 valid lines                             | 2                   | 2                 | ❌ FAIL |
+| DL-10   | `test_multiple_lines_loop_coverage`      | 3 lines: 2 valid, 1 invalid account #     | 2                   | 2                 | ❌ FAIL |
+| DL-11   | `test_empty_file_zero_iteration`         | Empty file                                | 0                   | 0                 | ✅ PASS |
 
 ---
 
 ## 7. Failures
 
-**2 failures in one bug were uncovered by testing.**
+**3 failures in one bug were uncovered by testing.**
 
 ---
 
@@ -173,7 +179,7 @@ return accounts
 | **Bug ID**       | BUG-01 |
 | **Severity**     | Medium |
 | **Affects**      | `read_old_bank_accounts()` in `read.py` (line 70) in phase 4 |
-| **Tests Failed** | DL-01 (`test_valid_single_account`), DL-08 (`test_multiple_lines_loop_coverage`) |
+| **Tests Failed** | DL-01 (`test_valid_single_account`), DL-09 (`test_two_lines_loop_coverage`), DL-10 (`test_multiple_lines_loop_coverage`) |
 
 **Description:**  
 When a valid account is appended to the list, the account number is stored using `account_number.lstrip('0')`. This silently strips all leading zeros from the raw 5-digit field. For example, the input `"01234"` is stored as `"1234"`.
@@ -192,6 +198,9 @@ When a valid account is appended to the list, the account number is stored using
 FAIL: test_valid_single_account
 AssertionError: '1234' != '01234'
 
+FAIL: test_two_lines_loop_coverage
+AssertionError: '1234' != '01234'
+
 FAIL: test_multiple_lines_loop_coverage
 AssertionError: '1234' != '01234'
 ```
@@ -203,4 +212,4 @@ Any downstream code (e.g., `find_account()` in `backend.py`) that looks up an ac
 
 
 ### Failures
-No failures were observed after fixing the 2 failures detected above.
+No failures were observed after fixing the 3 failures detected above.

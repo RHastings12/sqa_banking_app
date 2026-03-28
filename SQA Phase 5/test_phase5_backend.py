@@ -131,9 +131,21 @@ class TestReadOldBankAccountsDecisionLoopCoverage(unittest.TestCase):
 
         self.assertEqual(len(accounts), 0)
 
-    def test_negative_balance_format(self):
+    def test_negative_balance(self):
         lines = [
             "01234 John Doe             A -1000.00 0000 NP"
+        ]
+        file_path = self.create_temp_file(lines)
+
+        accounts = read_old_bank_accounts(file_path)
+
+        os.remove(file_path)
+
+        self.assertEqual(len(accounts), 0)
+
+    def test_invalid_balance_format(self):
+        lines = [
+            "01234 John Doe             A 1000.000 0000 NP"
         ]
         file_path = self.create_temp_file(lines)
 
@@ -166,6 +178,21 @@ class TestReadOldBankAccountsDecisionLoopCoverage(unittest.TestCase):
         os.remove(file_path)
 
         self.assertEqual(len(accounts), 0)
+
+    def test_two_lines_loop_coverage(self):
+        lines = [
+            "01234 John Doe             A 01000.00 0000 NP",
+            "02345 Sarah Smith          A 00500.00 0000 NP",
+        ]
+        file_path = self.create_temp_file(lines)
+
+        accounts = read_old_bank_accounts(file_path)
+
+        os.remove(file_path)
+
+        self.assertEqual(len(accounts), 2)
+        self.assertEqual(accounts[0]["account_number"], "1234")
+        self.assertEqual(accounts[1]["account_number"], "2345")
 
     def test_multiple_lines_loop_coverage(self):
         lines = [
