@@ -27,7 +27,9 @@ class Transaction:
         """Return the formatted transaction string for the .atf file.
 
         Example output:
-            DEP 123456 200.00
-            WDR 123456 300.00
+            03 123456 200.00
+            04 123456 300.00
         """
-        return f"{self.trans_code} {self.account_number} {self.amount:.2f}"
+        code_map = {"DEP": "03", "WDR": "04"}
+        code = code_map.get(self.trans_code, "00")
+        return f"{code} {self.account_number} {self.amount:.2f}"
