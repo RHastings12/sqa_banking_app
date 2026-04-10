@@ -11,9 +11,10 @@ Output Files:
     newaccounts.txt
 
 Run with:
-    python backend.py
+    python backend.py [currentaccounts.txt] [dailytransout.atf] [newaccounts.txt]
 """
 
+import sys
 from read import read_old_bank_accounts
 from write import write_new_current_accounts
 from print_error import log_constraint_error
@@ -38,6 +39,7 @@ class AccountManager:
 
         if acc:
             acc["balance"] += amount
+            acc["total_transactions"] += 1
         else:
             log_constraint_error("Account not found", "DEPOSIT")
 
@@ -46,6 +48,7 @@ class AccountManager:
 
         if acc:
             acc["balance"] -= amount
+            acc["total_transactions"] += 1
         else:
             log_constraint_error("Account not found", "WITHDRAW")
 
@@ -56,6 +59,8 @@ class AccountManager:
         if acc1 and acc2:
             acc1["balance"] -= amount
             acc2["balance"] += amount
+            acc1["total_transactions"] += 1
+            acc2["total_transactions"] += 1
         else:
             log_constraint_error("Transfer account missing", "TRANSFER")
 
@@ -64,6 +69,7 @@ class AccountManager:
 
         if acc:
             acc["balance"] -= amount
+            acc["total_transactions"] += 1
         else:
             log_constraint_error("Account not found", "PAYBILL")
 
@@ -81,25 +87,19 @@ class TransactionProcessor:
             return [line.strip() for line in f]
 
     def execute_transaction(self, transaction):
-
         parts = transaction.split()
         code = parts[0]
 
         if code == "03":  # deposit
             self.account_manager.deposit(parts[1], float(parts[2]))
-
         elif code == "04":  # withdraw
             self.account_manager.withdraw(parts[1], float(parts[2]))
-
         elif code == "05":  # transfer
             self.account_manager.transfer(parts[1], parts[2], float(parts[3]))
-
         elif code == "06":  # paybill
             self.account_manager.pay_bill(parts[1], float(parts[2]))
-
         elif code == "00":  # end of session
             return False
-
         return True
 
 
@@ -108,24 +108,25 @@ class BankingBackend:
     Main backend controller.
     """
 
-    def __init__(self):
+    def __init__(self, accounts_file, trans_file, output_file):
+        self.accounts_file = accounts_file
+        self.trans_file = trans_file
+        self.output_file = output_file
         self.accounts = []
 
     def load_accounts(self):
-        self.accounts = read_old_bank_accounts("currentaccounts.txt")
+        self.accounts = read_old_bank_accounts(self.accounts_file)
 
     def process_transactions(self):
         manager = AccountManager(self.accounts)
         processor = TransactionProcessor(manager)
-
-        transactions = processor.read_transactions("dailytransout.atf")
-
+        transactions = processor.read_transactions(self.trans_file)
         for t in transactions:
             if not processor.execute_transaction(t):
                 break
 
     def save_accounts(self):
-        write_new_current_accounts(self.accounts, "newaccounts.txt")
+        write_new_current_accounts(self.accounts, self.output_file)
 
     def run(self):
         self.load_accounts()
@@ -134,5 +135,8 @@ class BankingBackend:
 
 
 if __name__ == "__main__":
-    backend = BankingBackend()
+    if len(sys.argv) != 4:
+        print("Usage: python backend.py <current_accounts_file> <daily_transactions_file> <new_accounts_file>")
+        sys.exit(1)
+    backend = BankingBackend(sys.argv[1], sys.argv[2], sys.argv[3])
     backend.run()
