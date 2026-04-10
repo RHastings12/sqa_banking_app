@@ -150,8 +150,7 @@ class BankingApp:
     def write_trans(self, transaction: Transaction) -> None:
         """
         Append one transaction record to the daily transaction file *and* the
-        history log for the current run.  (History is also used for non-ATP
-        events via :meth:`log_history`.)
+        history log for the current run.
 
         Format (both files):  <CODE> <ACCOUNT_NUMBER> <AMOUNT>  (same as
         Transaction.format()).
@@ -246,7 +245,8 @@ class BankingApp:
             return
 
         self.current_user.update_balance(amount)
-        self.write_trans(Transaction("DEP", self.current_user.account_number, amount))
+        # Write numeric code "03" for deposit
+        self.write_trans(Transaction("03", self.current_user.account_number, amount))
         _ok(f"Deposit successful  (+${amount:,.2f})")
         _bal(int(self.current_user.get_balance()))
         print()
@@ -281,7 +281,8 @@ class BankingApp:
             return
 
         self.current_user.update_balance(-amount)
-        self.write_trans(Transaction("WDR", self.current_user.account_number, amount))
+        # Write numeric code "04" for withdrawal
+        self.write_trans(Transaction("04", self.current_user.account_number, amount))
         _ok(f"Withdrawal successful  (-${amount:,.2f})")
         _bal(int(self.current_user.get_balance()))
         print()
