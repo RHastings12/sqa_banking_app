@@ -7,7 +7,6 @@ def read_old_bank_accounts(file_path):
     with open(file_path, 'r') as file:
         for line_num, line in enumerate(file, 1):
             clean_line = line.rstrip('\n')
-            
             # Validate line length (now 44 chars to include plan type)
             if len(clean_line) != 45:
                 print(f"ERROR: Fatal error - Line {line_num}: Invalid length ({len(clean_line)} chars, expected 45)")
@@ -19,7 +18,7 @@ def read_old_bank_accounts(file_path):
                 name = clean_line[6:25]  # 20 characters
                 status = clean_line[27]
                 balance_str = clean_line[29:37]  # 8 characters
-                transactions_str = clean_line[38:42]  # 4 characters
+                pin_str = clean_line[38:42]  # 4 characters
                 plan_type = clean_line[43:45]  # 2 characters (SP/NP)
 
                 # Validate account number
@@ -44,8 +43,8 @@ def read_old_bank_accounts(file_path):
                     print(f"ERROR: Fatal error - Line {line_num}: Invalid balance format. Expected XXXXX.XX, got {balance_str}")
                     continue
 
-                # Validate transaction count
-                if not transactions_str.isdigit():
+                # Validate pin
+                if not pin_str.isdigit() or len(pin_str) != 4:
                     print(f"ERROR: Fatal error - Line {line_num}: Transaction count must be 4 digits")
                     continue
 
@@ -56,14 +55,10 @@ def read_old_bank_accounts(file_path):
 
                 # Convert values
                 balance = float(balance_str)
-                transactions = int(transactions_str)
 
                 # Business rule validation
                 if balance < 0:
                     print(f"ERROR: Fatal error - Line {line_num}: Negative balance detected")
-                    continue
-                if transactions < 0:
-                    print(f"ERROR: Fatal error - Line {line_num}: Negative transaction not allowed")
                     continue
 
                 accounts.append({
@@ -71,7 +66,7 @@ def read_old_bank_accounts(file_path):
                     'name': name.strip(),
                     'status': status,
                     'balance': balance,
-                    'total_transactions': transactions,
+                    'pin': pin_str,
                     'plan': plan_type
                 })
 

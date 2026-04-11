@@ -2,11 +2,8 @@
 bankingapp.py  —  Banking ATM Front End
 ==================================================
 Command-line usage:
-    python bankingapp.py <accounts_file> <trans_file>
-    python bankingapp.py currentaccounts.txt daily_transactions.txt
-    bank-atm currentaccounts.txt daily_transactions.txt
     
-    python bankingapp.py currentaccounts.txt dailytransout.atf
+    python bankingapp.py currentaccounts.txt
 
 stdin  → user keystrokes (or redirected test input file)
 stdout → terminal log (what the user sees on screen)
@@ -16,6 +13,7 @@ stdout → terminal log (what the user sees on screen)
 
 import sys
 import os
+from pathlib import Path
 
 from account import Account
 from transaction import Transaction
@@ -109,9 +107,8 @@ class BankingApp:
     """
 
     # ── __init__ ──────────────────────────────────────────────────────── #
-    def __init__(self, accounts_file: str, trans_file: str) -> None:
+    def __init__(self, accounts_file: str) -> None:
         self.accounts_file: str                = accounts_file
-        self.trans_file:    str                = trans_file
         self.accounts:      dict[str, Account] = {}
         self.current_user:  Account | None     = None
 
@@ -121,8 +118,12 @@ class BankingApp:
         # directory if it doesn't exist and open a fresh log for each run.
         self.history_dir: str = os.path.join(os.path.dirname(__file__), "Transactions")
         os.makedirs(self.history_dir, exist_ok=True)
-        timestamp = __import__("datetime").datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.history_file: str = os.path.join(self.history_dir, f"history_{timestamp}.txt")
+        
+        base_dir = Path(__file__).parent
+        transactions_dir = base_dir / "Transactions"
+        file_count = sum(1 for f in transactions_dir.iterdir() if f.is_file())
+
+        self.history_file: str = os.path.join(self.history_dir, f"session_{file_count + 1}.txt")
 
         # load the accounts after history is ready.
         self.load_accounts()
@@ -136,7 +137,6 @@ class BankingApp:
                 if not line:
                     continue
                 parts = line.split()
-                print(len(parts))
                 if len(parts) != 7:
                     continue          # skip malformed lines silently
                 acc_num, pin, bal = parts[0], parts[5], parts[4]
@@ -149,17 +149,12 @@ class BankingApp:
     # ── write_trans ───────────────────────────────────────────────────── #
     def write_trans(self, transaction: Transaction) -> None:
         """
-        Append one transaction record to the daily transaction file *and* the
-        history log for the current run.
+        Append transaction record to the history log for current session
 
         Format (both files):  <CODE> <ACCOUNT_NUMBER> <AMOUNT>  (same as
         Transaction.format()).
         """
         record = transaction.format() + "\n"
-
-        # always append to the configured transaction file
-        with open(self.trans_file, "a", encoding="utf-8") as f:
-            f.write(record)
 
         # record in history as well
         self.log_history(record.strip())
@@ -197,15 +192,12 @@ class BankingApp:
 
         self.current_user = acc
         _ok("Login successful")
-        # record event in history as well (not a financial transaction)
-        self.log_history(f"LOGIN {account_number}")
         print()
         return True
 
     # ── logout ────────────────────────────────────────────────────────── #
     def logout(self) -> None:
         """End the current session."""
-        self.log_history(f"LOGOUT {self.current_user.account_number if self.current_user else ''}")
         self.current_user = None
         _ok("Logout successful")
         print()
@@ -224,7 +216,7 @@ class BankingApp:
     def deposit(self) -> None:
         """
         Prompt for deposit amount, validate, update balance, and write
-        a DEP record to daily_transactions.txt via write_trans().
+        a DEP record to session history log via write_trans().
         """
         if self.current_user is None:
             return
@@ -245,8 +237,7 @@ class BankingApp:
             return
 
         self.current_user.update_balance(amount)
-        # Write numeric code "03" for deposit
-        self.write_trans(Transaction("03", self.current_user.account_number, amount))
+        self.write_trans(Transaction("DEP", self.current_user.account_number, amount))
         _ok(f"Deposit successful  (+${amount:,.2f})")
         _bal(int(self.current_user.get_balance()))
         print()
@@ -255,7 +246,7 @@ class BankingApp:
     def withdraw(self) -> None:
         """
         Prompt for withdrawal amount, validate, update balance, and write
-        a WDR record to daily_transactions.txt via write_trans().
+        a WDR record to session history log via write_trans().
         """
         if self.current_user is None:
             return
@@ -281,8 +272,7 @@ class BankingApp:
             return
 
         self.current_user.update_balance(-amount)
-        # Write numeric code "04" for withdrawal
-        self.write_trans(Transaction("04", self.current_user.account_number, amount))
+        self.write_trans(Transaction("WDR", self.current_user.account_number, amount))
         _ok(f"Withdrawal successful  (-${amount:,.2f})")
         _bal(int(self.current_user.get_balance()))
         print()
@@ -380,27 +370,24 @@ class BankingApp:
 # Entry point
 # ══════════════════════════════════════════════════════════════════════════════
 
-DEFAULT_ACCOUNTS = "accounts.txt"
-DEFAULT_TRANS    = "daily_transactions.txt"
+DEFAULT_ACCOUNTS = "currentaccounts.txt"
 
 def main(argv: list[str]) -> int:
     """
     Usage (all forms accepted):
-        python bankingapp.py                              → defaults
-        python bankingapp.py accounts.txt                → custom accounts
-        python bankingapp.py accounts.txt trans.txt      → both custom
-        bank-atm accounts.txt daily_transactions.txt     → via launcher
+        python bankingapp.py                                    → defaults
+        python bankingapp.py currentaccounts.txt                → custom accounts
+        bank-atm currentaccounts.txt                            → via launcher
     """
     if len(argv) > 3:
-        print("Usage:  bank-atm [accounts_file] [trans_file]")
-        print(f"        bank-atm {DEFAULT_ACCOUNTS} {DEFAULT_TRANS}")
+        print("Usage:  bank-atm [accounts_file]")
+        print(f"       bank-atm {DEFAULT_ACCOUNTS}")
         return 1
 
     accounts_file = argv[1] if len(argv) > 1 else DEFAULT_ACCOUNTS
-    trans_file    = argv[2] if len(argv) > 2 else DEFAULT_TRANS
 
     try:
-        app = BankingApp(accounts_file, trans_file)
+        app = BankingApp(accounts_file)
     except FileNotFoundError as e:
         print(f"Error: {e}")
         return 1
