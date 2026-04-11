@@ -1,10 +1,10 @@
 01234 John Doe             A 90000.00 4321 NP
-02345 Sarah Smith          A 01370.00 5687 SP
-19276 Mark Anderson        A 21080.00 3333 NP
-83413 Jerry Mickelson      A 06055.00 5190 NP
-83414 Michelle Mickelson   A 04900.00 2222 SP
-13900 Jim Jim              A 65450.00 1264 NP
-00001 Stan Lee             A 21904.99 9999 NP
+02345 Sarah Smith          A 01240.00 5687 SP
+19276 Mark Anderson        A 23160.00 3333 NP
+83413 Jerry Mickelson      A 07055.00 5190 NP
+83414 Michelle Mickelson   A 05800.00 2222 SP
+13900 Jim Jim              A 65550.00 1264 NP
+00001 Stan Lee             A 21809.99 9999 NP
 45219 Bruce Lee            A 55660.78 7777 NP
 11111 Andy Anderson        A 36000.95 6123 NP
 22222 Mandy Anderson       A 18300.21 8142 SP

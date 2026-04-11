@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# Reset transaction logs
+TRANSACTIONS_DIR="./Transactions"
+
+if [ -d "$TRANSACTIONS_DIR" ]; then
+    echo "Cleaning $TRANSACTIONS_DIR..."
+    find "$TRANSACTIONS_DIR" -mindepth 1 -delete
+else
+    echo "ERROR: $TRANSACTIONS_DIR not found"
+    exit 1
+fi
+
 cd tests
 
 for dir in */; do
