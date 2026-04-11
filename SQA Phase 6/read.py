@@ -1,4 +1,4 @@
-def read_old_bank_accounts(file_path):
+def read_bank_accounts(file_path):
     """
     Reads and validates the bank account file format with plan type (SP/NP)
     Returns list of accounts and prints fatal errors for invalid format
@@ -7,7 +7,7 @@ def read_old_bank_accounts(file_path):
     with open(file_path, 'r') as file:
         for line_num, line in enumerate(file, 1):
             clean_line = line.rstrip('\n')
-            # Validate line length (now 44 chars to include plan type)
+            # Validate line length
             if len(clean_line) != 45:
                 print(f"ERROR: Fatal error - Line {line_num}: Invalid length ({len(clean_line)} chars, expected 45)")
                 continue

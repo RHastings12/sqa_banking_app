@@ -15,7 +15,7 @@ Run with:
 """
 
 import sys
-from read import read_old_bank_accounts
+from read import read_bank_accounts
 from write import write_new_accounts
 from print_error import log_constraint_error
 
@@ -90,7 +90,7 @@ class TransactionProcessor:
             self.account_manager.deposit(parts[1].lstrip('0'), float(parts[2]))
         elif code == "WDR":  # withdraw
             self.account_manager.withdraw(parts[1].lstrip('0'), float(parts[2]))
-        elif code == "TRNS":  # transfer
+        elif code == "TRN":  # transfer
             self.account_manager.transfer(parts[1].lstrip('0'), parts[2].lstrip('0'), float(parts[3]))
         elif code == "PAY":  # paybill
             self.account_manager.pay_bill(parts[1].lstrip('0'), float(parts[2]))
@@ -111,7 +111,7 @@ class BankingBackend:
         self.accounts = []
 
     def load_accounts(self):
-        self.accounts = read_old_bank_accounts(self.master_accounts_file)
+        self.accounts = read_bank_accounts(self.master_accounts_file)
 
     def process_transactions(self):
         manager = AccountManager(self.accounts)

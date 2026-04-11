@@ -17,6 +17,7 @@ from pathlib import Path
 
 from account import Account
 from transaction import Transaction
+from read import read_bank_accounts
 
 # Required for encoding some characters
 if sys.platform.startswith("win"):
@@ -43,7 +44,7 @@ def _box_row(txt: str, align: str = "left") -> str:
 def _banner() -> None:
     print(_box_top())
     print(_box_row("  Banking App Terminal", "left"))
-    print(_box_row("  Phase 3", "left"))
+    print(_box_row("  Phase 6", "left"))
     print(_box_div())
     print(_box_row("  Welcome to the Banking System", "left"))
     print(_box_bot())
@@ -57,8 +58,9 @@ def _menu_box(account_number: str) -> None:
     print(_box_row("    1.  View Balance", "left"))
     print(_box_row("    2.  Deposit", "left"))
     print(_box_row("    3.  Withdraw", "left"))
-    print(_box_row("    4.  Logout", "left"))
-    print(_box_row("    5.  Exit", "left"))
+    print(_box_row("    4.  Transfer", "left"))
+    print(_box_row("    5.  Logout", "left"))
+    print(_box_row("    6.  Exit", "left"))
     print(_box_bot())
 
 def _section(title: str) -> None:
@@ -139,12 +141,12 @@ class BankingApp:
                 parts = line.split()
                 if len(parts) != 7:
                     continue          # skip malformed lines silently
-                acc_num, pin, bal = parts[0], parts[5], parts[4]
+                acc_num, name, pin, bal = parts[0].lstrip('0'), f"{parts[1]} {parts[2]}", parts[5], parts[4]
                 try:
                     balance = float(bal)
                 except ValueError:
                     continue
-                self.accounts[acc_num] = Account(acc_num, pin, balance)
+                self.accounts[acc_num] = Account(acc_num, name, pin, balance)
 
     # ── write_trans ───────────────────────────────────────────────────── #
     def write_trans(self, transaction: Transaction) -> None:
@@ -276,6 +278,48 @@ class BankingApp:
         _ok(f"Withdrawal successful  (-${amount:,.2f})")
         _bal(int(self.current_user.get_balance()))
         print()
+    
+    # ── transfer ──────────────────────────────────────────────────────── #
+    def transfer(self) -> None:
+        if self.current_user is None:
+            return
+        _section("Transfer")
+        raw = _prompt("Amount ($)  ")
+        target_user = _prompt("Send To  ").strip().upper()
+        _section_end()
+
+        try:
+            amount = float(raw)
+        except ValueError:
+            _err("Invalid transfer amount")
+            print()
+            return
+
+        if amount <= 0:
+            _err("Invalid transfer amount")
+            print()
+            return
+
+        if amount > self.current_user.get_balance():
+            _err("Insufficient funds")
+            print()
+            return
+        
+        target_account_number = None
+        for account in self.accounts.values():
+            if account.get_name().upper() == target_user:
+                target_account_number = account.account_number
+
+        if not target_account_number:
+            _err("Target not found")
+            print()
+            return 
+
+        self.current_user.update_balance(-amount)
+        self.write_trans(Transaction("TRN", self.current_user.account_number, amount, account_target = target_account_number))
+        _ok(f"Transfer successful  (-${amount:,.2f})")
+        _bal(int(self.current_user.get_balance()))
+        print()
 
     # ── process_menu ──────────────────────────────────────────────────── #
     def process_menu(self, choice: str) -> str:
@@ -287,6 +331,7 @@ class BankingApp:
         'balance'        → call view_balance()
         'deposit'        → call deposit()
         'withdraw'       → call withdraw()
+        'transfer'       → call transfer()
         'logout'         → call logout(), restart outer login loop
         'exit'           → end the program
         'invalid_format' → non-integer input; print error and exit
@@ -301,8 +346,9 @@ class BankingApp:
             1: "balance",
             2: "deposit",
             3: "withdraw",
-            4: "logout",
-            5: "exit",
+            4: "transfer",
+            5: "logout",
+            6: "exit",
         }.get(n, "invalid_option")
 
     # ── run ───────────────────────────────────────────────────────────── #
@@ -329,7 +375,7 @@ class BankingApp:
                 _menu_box(self.current_user.account_number)
 
                 try:
-                    print("  ▶  Select (1-5): ")
+                    print("  ▶  Select (1-6): ")
                     choice = input().strip()
                 except EOFError:
                     return          # clean exit when input file is exhausted
@@ -344,6 +390,9 @@ class BankingApp:
 
                 elif action == "withdraw":
                     self.withdraw()
+                
+                elif action == "transfer":
+                    self.transfer()
 
                 elif action == "logout":
                     self.logout()

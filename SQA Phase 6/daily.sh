@@ -1,14 +1,16 @@
 #!/bin/sh
 
-cd tests
+cd tests/day_1
 
+# Run all session inputs for frontend
 for i in *; do
-    python ../bankingapp.py ../currentaccounts.txt < $i
+    python ../../bankingapp.py ../../currentaccounts.txt < $i
 done
 
-cd ../Transactions
+cd ../../Transactions
 
 # Combine session outputs into single file
 cat session_*.txt > ../dailytransout.atf
 
+# Run backend
 python ../backend.py ../dailytransout.atf ../currentaccounts.txt ../masteraccounts.txt
