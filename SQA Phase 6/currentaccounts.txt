@@ -1,4 +1,4 @@
-01234 John Doe             A 90000.00 4321 NP
+01234 John Doe             A 10000.00 4321 NP
 02345 Sarah Smith          A 01240.00 5687 SP
 19276 Mark Anderson        A 23160.00 3333 NP
 83413 Jerry Mickelson      A 07055.00 5190 NP
